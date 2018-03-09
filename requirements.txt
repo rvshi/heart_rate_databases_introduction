@@ -2,3 +2,4 @@ Flask
 pymodm
 pytest
 gunicorn
+markdown
