@@ -27,7 +27,7 @@ def get_hr(user_email):
 def get_avg_hr(user_email):
     try:
         u = models.User.objects.raw({'_id': user_email}).first()
-        message = '[INFO] average heart rate calculated for {}.'.format(
+        message = '[INFO] avg. heart rate calculated for {}.'.format(
             user_email)
         return (message, calc_avg(u.heart_rate), 200)
     except errors.DoesNotExist:
@@ -40,7 +40,7 @@ def get_int_avg(input):
 
     try:
         u = models.User.objects.raw({'_id': user_email}).first()
-        message = '[INFO] average heart rate calculated for {} after {}.'.format(
+        message = '[INFO] avg. heart rate calculated for {} after {}.'.format(
             user_email, input['heart_rate_average_since'])
 
         # determine heart rates in interval

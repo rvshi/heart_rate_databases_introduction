@@ -8,7 +8,11 @@ def check_date(str):
 
     :param str: string to check
     """
-    pass
+    try:
+        datetime.datetime.strptime(str, ISO_8601)
+        return True
+    except ValueError as v:
+        return False
 
 
 def get_date(str):

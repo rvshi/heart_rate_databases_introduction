@@ -25,7 +25,7 @@ A Flask server for heart rate data using a MongoDB database (running in a Docker
   ```
   {
       "user_email": "me@harveyshi.com",
-      "heart_rate_average_since": "2018-08-18 01:23:45.6789"
+      "heart_rate_average_since": "2018-08-18T01:23:45.6789"
   }
   ```
-    - `heart_rate_average_since` must be in ISO 8601 format i.e. `YYYY-MM-DD HH:MM:SS`
+    - `heart_rate_average_since` must be in ISO 8601 format i.e. `YYYY-MM-DDTHH:MM:SS`

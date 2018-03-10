@@ -65,16 +65,20 @@ def test_interval_average():
     input_output = [
         ({
             'user_email': 'a@b.c',
-            'heart_rate_average_since': '2018-03-09 11:00:36.372339'
+            'heart_rate_average_since': '2018-03-09T11:00:36.112312'
         }, True),
+        ({
+            'user_email': 'a@b.c',
+            'heart_rate_average_since': '2018-03-09 11:00:36.112312'
+        }, False),
         ({
             'user_email': 'a@b.c',
             'heart_rate_average_since': '2018/03/09 11:00'
-        }, True),
+        }, False),
         ({
             'user_email': 'a@b.c',
             'heart_rate_average_since': '2/3/14'
-        }, True),
+        }, False),
         ({
             'user_email': 'a@b.c',
             'heart_rate_average_since': '2/3/14/2'
@@ -82,7 +86,7 @@ def test_interval_average():
         ({
             'user_email': 'a@b.c',
             'heart_rate_average_since': '5/6 2:00'
-        }, True),
+        }, False),
         ({
             'user_email': 'a@b.c',
             'heart_rate_average_since': ''
