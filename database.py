@@ -3,15 +3,14 @@
 from pymodm import connect, errors
 import models
 import datetime
+from dateformat import get_date
 
 mongo_url = 'mongodb://localhost:27017/heart_rate_app'
 connect(mongo_url)
 
 
 def add_heart_rate(input):
-    message = update_user(**input)
-    code = 200
-    return (message, None, code)
+    return (update_user(**input), None, 200)
 
 
 def get_hr(user_email):
@@ -22,20 +21,60 @@ def get_hr(user_email):
         data = u.heart_rate
         return (message, data, 200)
     except errors.DoesNotExist:
-        message = '[ERROR] user not found'
-        return(message, None, 400)
+        return('[ERROR] user not found', None, 400)
 
 
 def get_avg_hr(user_email):
-    message = ''
-    data = 2.3
-    return (message, data, 200)
+    try:
+        u = models.User.objects.raw({'_id': user_email}).first()
+        message = '[INFO] average heart rate calculated for {}.'.format(
+            user_email)
+        return (message, calc_avg(u.heart_rate), 200)
+    except errors.DoesNotExist:
+        return('[ERROR] user not found', None, 400)
 
 
 def get_int_avg(input):
-    message = ''
-    data = 3.5
-    return (message, data, 200)
+    user_email = input['user_email']
+    date_string = get_date(input['heart_rate_average_since'])
+
+    try:
+        u = models.User.objects.raw({'_id': user_email}).first()
+        message = '[INFO] average heart rate calculated for {} after {}.'.format(
+            user_email, input['heart_rate_average_since'])
+
+        # determine heart rates in interval
+        heart_rates = []
+        for i, time in enumerate(u.heart_rate_times):
+            if(time > date_string):
+                heart_rates.append(u.heart_rate[i])
+
+        if(len(heart_rates) > 0):
+            avg = calc_avg(heart_rates)
+            data = {
+                'average': avg,
+                'tachycardia': has_tachycardia(u.age, avg)
+            }
+            return(message, data, 200)
+        else:
+            return('[ERROR] no data for specified interval', None, 400)
+    except errors.DoesNotExist:
+        return('[ERROR] user not found', None, 400)
+
+
+def calc_avg(l):
+    return sum(l) / float(len(l))
+
+
+def has_tachycardia(age, hr):
+    t0 = age < 1 and hr > 169
+    t1 = (1 <= age and age < 3) and hr > 151
+    t2 = (3 <= age and age < 5) and hr > 137
+    t3 = (5 <= age and age < 8) and hr > 133
+    t4 = (8 <= age and age < 12) and hr > 130
+    t5 = (12 <= age and age < 15) and hr > 119
+    t6 = age >= 15 and hr > 100
+    return any([t0, t1, t2, t3, t4, t5, t6])
 
 
 def update_user(user_email, user_age, heart_rate):
@@ -50,7 +89,7 @@ def update_user(user_email, user_age, heart_rate):
         user.age = user_age
         user.heart_rate.append(heart_rate)
         user.heart_rate_times.append(time_stamp)
-        message = '[INFO] Added heart rate entry.'
+        message = '[INFO] Added heart rate entry for {}.'.format(user_email)
     user.save()
     return message
 
@@ -58,8 +97,8 @@ def update_user(user_email, user_age, heart_rate):
 def print_user(email):
     try:
         user = models.User.objects.raw({'_id': email}).first()
-        print(user.email)
-        print(user.age)
+        print('\nUser: {}'.format(user.email))
+        print('Age:  {}'.format(user.age))
         print(user.heart_rate)
         print(user.heart_rate_times)
     except errors.DoesNotExist:
@@ -70,18 +109,7 @@ def delete_user(email):
     try:
         user = models.User.objects.raw({'_id': email}).first()
         user.delete()
+        message = '[INFO] Deleted user {}.'.format(email)
+        print(message)
     except errors.DoesNotExist:
         print('User not found')
-
-
-if __name__ == '__main__':
-    email = 'me@harveyshi.com'
-    example_user = {'user_email': email,
-                    'user_age': 100,
-                    'heart_rate': 82
-                    }
-
-    print(update_user(**example_user))
-    print(get_hr(email))
-    print_user(email)
-    delete_user(email)

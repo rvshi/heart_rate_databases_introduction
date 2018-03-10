@@ -1,5 +1,6 @@
 from jsonschema import validate, ValidationError
 from dateutil.parser import parse
+from dateformat import check_date
 
 # Regex from http://emailregex.com
 email_type = {
@@ -41,23 +42,22 @@ interval_average_type = {
 def val_heart_rate(input):
     try:
         validate(input, heart_rate_type)
-        return False
-    except ValidationError:
         return True
+    except ValidationError:
+        return False
 
 
 def val_email(input):
     try:
         validate(input, email_type)
-        return False
-    except ValidationError:
         return True
+    except ValidationError:
+        return False
 
 
 def val_interval_average(input):
     try:
         validate(input, interval_average_type)
-        parse(input['heart_rate_average_since'])
-        return False
+        return check_date(input['heart_rate_average_since'])
     except (ValueError, ValidationError):
-        return True
+        return False

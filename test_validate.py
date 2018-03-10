@@ -41,7 +41,7 @@ def test_heart_rate():
     ]
     for i_o in input_output:
         val_res = val_heart_rate(i_o[0])
-        assert val_res != i_o[1]
+        assert val_res == i_o[1]
 
 
 def test_email_type():
@@ -57,7 +57,7 @@ def test_email_type():
     ]
     for i_o in input_output:
         val_res = val_email(i_o[0])
-        assert val_res != i_o[1]
+        assert val_res == i_o[1]
 
 
 def test_interval_average():
@@ -95,4 +95,4 @@ def test_interval_average():
     ]
     for i_o in input_output:
         val_res = val_interval_average(i_o[0])
-        assert val_res != i_o[1]
+        assert val_res == i_o[1]
