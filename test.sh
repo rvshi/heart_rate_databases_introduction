@@ -1,3 +1,2 @@
 #!/bin/bash
-export FLASK_APP=main.py
-flask run
+pytest -s -v --pep8

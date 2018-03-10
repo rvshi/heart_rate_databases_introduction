@@ -22,7 +22,6 @@ def new_data():
         }
         return jsonify(res), 400
 
-    
 
 @app.route('/api/heart_rate/<user_email>', methods=['GET'])
 def user_data(user_email):
@@ -32,7 +31,7 @@ def user_data(user_email):
             'input': user_email
         }
         return jsonify(res), 400
-    
+
 
 @app.route('/api/heart_rate/average/<user_email>', methods=['GET'])
 def average(user_email):
@@ -42,7 +41,7 @@ def average(user_email):
             'input': user_email
         }
         return jsonify(res), 400
-    
+
 
 @app.route('/api/heart_rate/interval_average', methods=['POST'])
 def interval_average():

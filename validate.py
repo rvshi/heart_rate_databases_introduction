@@ -12,7 +12,7 @@ heart_rate_type = {
     'properties': {
         'user_email': email_type,
         'user_age': {
-            'type': 'integer',
+            'type': 'number',
             'minimum': 0
         },
         'heart_rate': {
@@ -21,8 +21,8 @@ heart_rate_type = {
             'maximum': 500
         }
     },
-   	'required': ['user_email', 'user_age', 'heart_rate'],
-   	'additionalProperties': False
+    'required': ['user_email', 'user_age', 'heart_rate'],
+    'additionalProperties': False
 }
 
 interval_average_type = {
@@ -33,9 +33,10 @@ interval_average_type = {
             'type': 'string'
         }
     },
-   	'required': ['user_email', 'heart_rate_average_since'],
-   	'additionalProperties': False
+    'required': ['user_email', 'heart_rate_average_since'],
+    'additionalProperties': False
 }
+
 
 def val_heart_rate(input):
     try:
@@ -51,12 +52,12 @@ def val_email(input):
         return False
     except ValidationError:
         return True
-    
+
 
 def val_interval_average(input):
     try:
         validate(input, interval_average_type)
-        return False
         parse(input['heart_rate_average_since'])
+        return False
     except (ValueError, ValidationError):
-        return True    
+        return True
