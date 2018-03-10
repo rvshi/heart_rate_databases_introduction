@@ -1,4 +1,4 @@
-import markdown
+import mistune
 from flask import Flask, jsonify, request, render_template
 from validate import val_heart_rate, val_email, val_interval_average
 from database import add_heart_rate, get_hr, get_avg_hr, get_int_avg
@@ -34,7 +34,7 @@ def handle_data(input, validator, action):
 @app.route('/', methods=['GET'])
 def welcome():
     with open('README.md', 'r') as f:
-        content = markdown.markdown(f.read())
+        content = mistune.markdown(f.read())
         return render_template('index.html', content=content)
 
 
