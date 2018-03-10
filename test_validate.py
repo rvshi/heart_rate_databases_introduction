@@ -41,7 +41,7 @@ def test_heart_rate():
     ]
     for i_o in input_output:
         val_res = val_heart_rate(i_o[0])
-        assert val_res != i_o[1]
+        assert val_res == i_o[1]
 
 
 def test_email_type():
@@ -57,7 +57,7 @@ def test_email_type():
     ]
     for i_o in input_output:
         val_res = val_email(i_o[0])
-        assert val_res != i_o[1]
+        assert val_res == i_o[1]
 
 
 def test_interval_average():
@@ -65,16 +65,20 @@ def test_interval_average():
     input_output = [
         ({
             'user_email': 'a@b.c',
-            'heart_rate_average_since': '2018-03-09 11:00:36.372339'
+            'heart_rate_average_since': '2018-03-09T11:00:36.112312'
         }, True),
+        ({
+            'user_email': 'a@b.c',
+            'heart_rate_average_since': '2018-03-09 11:00:36.112312'
+        }, False),
         ({
             'user_email': 'a@b.c',
             'heart_rate_average_since': '2018/03/09 11:00'
-        }, True),
+        }, False),
         ({
             'user_email': 'a@b.c',
             'heart_rate_average_since': '2/3/14'
-        }, True),
+        }, False),
         ({
             'user_email': 'a@b.c',
             'heart_rate_average_since': '2/3/14/2'
@@ -82,7 +86,7 @@ def test_interval_average():
         ({
             'user_email': 'a@b.c',
             'heart_rate_average_since': '5/6 2:00'
-        }, True),
+        }, False),
         ({
             'user_email': 'a@b.c',
             'heart_rate_average_since': ''
@@ -95,4 +99,4 @@ def test_interval_average():
     ]
     for i_o in input_output:
         val_res = val_interval_average(i_o[0])
-        assert val_res != i_o[1]
+        assert val_res == i_o[1]

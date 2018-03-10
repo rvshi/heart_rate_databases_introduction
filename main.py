@@ -16,11 +16,11 @@ def handle_data(input, validator, action):
     """
 
     if(validator(input)):
-        message = 'ERROR: input was incorrectly formatted.'
-        code = 400
+        message = '[ERROR] input was incorrectly formatted.'
         data = None
+        code = 400
     else:
-        (message, code, data) = action(input)
+        (message, data, code) = action(input)
 
     res = {
         'message': message,

@@ -5,4 +5,3 @@ pytest-pep8
 gunicorn
 markdown
 jsonschema
-python-dateutil

@@ -6,7 +6,7 @@ __Developed by:__ Harvey Shi (@rvshi)
 
 __Course:__ BME 590 Spring 2018
 
-A Flask server for heart rate data using a MongoDB database 
+A Flask server for heart rate data using a MongoDB database (running in a Docker container).
 
 ## API Endpoints
 - `POST /api/heart_rate` to store heart rate measurements, using the following json format:
@@ -25,6 +25,7 @@ A Flask server for heart rate data using a MongoDB database
   ```
   {
       "user_email": "me@harveyshi.com",
-      "heart_rate_average_since": "2018-08-18 01:23:45.6789"
+      "heart_rate_average_since": "2018-08-18T01:23:45.6789"
   }
   ```
+    - `heart_rate_average_since` must be in ISO 8601 format i.e. `YYYY-MM-DDTHH:MM:SS``
