@@ -10,33 +10,33 @@ A Python3 Flask server for heart rate data using a MongoDB database (running in 
 
 ## API Usage
 - `POST /api/heart_rate` to store heart rate measurements, using the following JSON format:
-```
-{
-    "user_email": "me@harveyshi.com",
-    "user_age": 100,
-    "heart_rate": 82
-}
-```
+    ```json
+    {
+        "user_email": "me@harveyshi.com",
+        "user_age": 100,
+        "heart_rate": 82
+    }
+    ```
     - where `user_age` is in years and `heart_rate` is in beats per minute
 - `GET /api/heart_rate/<user_email>` will retrieve a list of the heart rate measurements for the specified user
 - `GET /api/heart_rate/average/<user_email>` will return the average heart rate measurement for the specified user
 - `POST /api/heart_rate/interval_average` will return the average heart rate for a user in the interval following a specified time, using the following JSON format:
-  ```
-  {
-      "user_email": "me@harveyshi.com",
-      "heart_rate_average_since": "2018-08-18T01:23:45.6789"
-  }
-  ```
-    - __IMPORTANT:__ `heart_rate_average_since` must be in ISO 8601 format i.e. `YYYY-MM-DDTHH:MM:SS``
+    ```json
+    {
+        "user_email": "me@harveyshi.com",
+        "heart_rate_average_since": "2018-08-18T01:23:45.6789"
+    }
+    ```
+    - __IMPORTANT:__ `heart_rate_average_since` must be in ISO 8601 format i.e. `YYYY-MM-DDTHH:MM:SS`
     - This will return a JSON with the average heart rate over the interval, as well as a boolean specifying if the average heart rate and specified age could indicate [tachycardia](https://en.wikipedia.org/wiki/Tachycardia), for example:
-```
-{
-    "average": 77.23,
-    "tachycardia": false
-}
-```
+    ```json
+    {
+        "average": 77.23,
+        "tachycardia": false
+    }
+    ```
 - All API responses include an `input` parameter echoing the request data, and a `message` parameter for logging information and error information for the request, for example:
-```
+```json
 {
     "data": 74.5,
     "input": "me@harveyshi.com",
