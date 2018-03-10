@@ -1,5 +1,4 @@
 from jsonschema import validate, ValidationError
-from dateutil.parser import parse
 from dateformat import check_date
 
 # Regex from http://emailregex.com
