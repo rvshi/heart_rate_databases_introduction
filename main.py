@@ -15,7 +15,7 @@ def handle_data(input, validator, action):
     :return: jsonified response
     """
 
-    if(validator(input)):
+    if(not validator(input)):
         message = '[ERROR] input was incorrectly formatted.'
         data = None
         code = 400
