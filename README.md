@@ -1,5 +1,7 @@
 # Heart Rate Server with Database
 
+[![Build Status](https://travis-ci.org/rvshi/heart_rate_databases_introduction.svg?branch=master)](https://travis-ci.org/rvshi/heart_rate_databases_introduction)
+
 __Developed by:__ Harvey Shi (@rvshi)
 
 __Course:__ BME 590 Spring 2018
