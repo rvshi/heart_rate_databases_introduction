@@ -1,39 +1,32 @@
 import pytest
 
 
-@pytest.mark.skip(reason="requires docker instance")
-def test_database():
-    import database
-    import datetime
-    from time import sleep
-    from dateformat import get_str
-
-    email = 'a@b.c'
-    e1 = {'user_email': email,
-          'user_age': 100,
-          'heart_rate': 82
-          }
-    e2 = {'user_email': email,
-          'user_age': 101,
-          'heart_rate': 45
-          }
-
-    print(database.update_user(**e1))
-    database.print_user(email)
-
-    print(database.update_user(**e2))
-    database.print_user(email)
-
-    new_time = get_str(datetime.datetime.now())
-    print(new_time)
-
-    int_avg = {
-        'user_email': 'a@b.c',
-        'heart_rate_average_since': new_time
-    }
-    print(database.get_int_avg(int_avg))
-    database.delete_user(email)
+def test_calc_avg():
+    from database import calc_avg
+    input_output = [
+        ([1], 1),
+        ([2, 3, 4], 3),
+        ([1, 0, -1], 0),
+        ([12, 3, 3, 4, 3, 2], 4.5),
+        ([100000001, 1], 50000001)
+    ]
+    for i_o in input_output:
+        assert pytest.approx(i_o[1], calc_avg(i_o[0]))
 
 
-if __name__ == '__main__':
-    test_database()
+def test_has_tachycardia():
+    from database import has_tachycardia
+    input_output = [
+        (0, 170, True),
+        (0, 168, False),
+        (1, 152, True),
+        (1, 151, False),
+        (3, 138, True),
+        (3, 137, False),
+        (5, 134, True),
+        (5, 133, False),
+        (8, 131, True),
+        (8, 130, False)
+    ]
+    for i_o in input_output:
+        assert i_o[2] == has_tachycardia(i_o[0], i_o[1])
