@@ -5,3 +5,4 @@ pytest-pep8
 gunicorn
 mistune
 jsonschema
+flask_cors

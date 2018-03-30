@@ -2,8 +2,10 @@ import mistune
 from flask import Flask, jsonify, request, render_template
 from validate import val_heart_rate, val_email, val_interval_average
 from database import add_heart_rate, get_hr, get_avg_hr, get_int_avg
+from flask_cors import CORS
 
 app = Flask(__name__, static_url_path='/static')
+CORS(app)
 
 
 def handle_data(input, validator, action):
