@@ -18,7 +18,9 @@ def get_hr(user_email):
         u = models.User.objects.raw({'_id': user_email}).first()
         message = '[INFO] heart rate data retrieved for {}.'.format(
             user_email)
-        data = u.heart_rate
+        data = []
+        for i, time in enumerate(u.heart_rate_times):
+            data.append([time,u.heart_rate[i]])
         return (message, data, 200)
     except errors.DoesNotExist:
         return('[ERROR] user not found', None, 400)
