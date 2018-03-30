@@ -20,7 +20,7 @@ def get_hr(user_email):
             user_email)
         data = []
         for i, time in enumerate(u.heart_rate_times):
-            data.append([time,u.heart_rate[i]])
+            data.append([time, u.heart_rate[i]])
         return (message, data, 200)
     except errors.DoesNotExist:
         return('[ERROR] user not found', None, 400)
